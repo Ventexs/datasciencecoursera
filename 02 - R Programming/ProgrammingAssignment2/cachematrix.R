@@ -20,19 +20,25 @@
 
 makeCacheMatrix <- function(x = matrix()) {
         
+        #initialize inverse field
         i <- NULL
         
+        #matrix setter
         set <- function(y) {
                 x <<- y
                 i <<- NULL
         }
         
+        #matrix getter
         get <- function() x
         
+        #inverse setting
         setinverse <- function(inverse) i <<- inverse
         
+        #inverse getter
         getinverse <- function() i
         
+        #list of methods to be returned for this contructor function
         list(set = set, get = get, setinverse = setinverse,
              getinverse = getinverse)
 }
@@ -48,16 +54,21 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
         
+        #use x's setter to get the inverse field
         i <- x$getinverse()
         
+        #if inverse field is NOT null, return the cached value
         if(!is.null(i)) {
                 message("getting cached data")
                 return(i)
         }
         
+        #if inverse field is null, get the matrix, calculate
+        #inverse, and set it
         matrix <- x$get()
         i <- solve(matrix, ...)
         x$setinverse(i)
         
+        #return the calculated inverse
         i
 }
