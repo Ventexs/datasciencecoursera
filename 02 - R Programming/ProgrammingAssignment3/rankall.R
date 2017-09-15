@@ -1,6 +1,17 @@
-#14 Sept 2017
+# Script: rankall.R
+# Author: Steven Pettipas
+# Date: 14 Sept 2017
+#
+# Given a .CSV file of American hospital data, take an outcome
+# (heart attack, heart failure, pneumonia) and rank number (based
+# on outcome) and generate a list of the hospitals with that rank
+# for each state.
+
 rankall <- function(outcome, num = "best") {
         
+        # valid
+        #
+        # A function to validate the parent function's arguments
         valid <- function(outcome, num) {
                 if(!(tolower(outcome) %in% c("heart attack", "heart failure", "pneumonia"))){
                         stop("invalid outcome")
@@ -9,6 +20,9 @@ rankall <- function(outcome, num = "best") {
                 }
         }
         
+        # readhospitalfile
+        #
+        # A function to read in the .CSV file of hospital data
         readhospitalfile <- function() {
                 path <- "C:/Users/Steven/Desktop/Coursera/datasciencecoursera/02 - R Programming/ProgrammingAssignment3/outcome-of-care-measures.csv"
                 data <- read.csv(path, colClasses = "character")
@@ -16,6 +30,10 @@ rankall <- function(outcome, num = "best") {
                 data
         } 
         
+        # cleanData
+        #
+        # A function that takes in the read .CSV data and cleans it to contain
+        # only the necessary columns and data types
         cleanData <- function(dataset, outcome) {
                 
                 if(tolower(outcome) == "heart attack" ){
@@ -35,18 +53,14 @@ rankall <- function(outcome, num = "best") {
                 
         }
         
-        #validate arguments
+        #validate arguments and initialize variables
         valid(outcome, num)
-        
         results <- data.frame(Hospital.Name = as.character(), State = as.character())
-
-        
-        
         
         #read file
         data <- readhospitalfile()
         
-        #clean data for given state/outcome
+        #clean data for given outcome
         data <- cleanData(data, outcome)
         
         #split data by state
@@ -55,10 +69,17 @@ rankall <- function(outcome, num = "best") {
         #loop over each state to order their data and find the corresponding hospital in
         #that state for the given rank
         for(i in 1:length(listofsubdata)){
+                
+                #find the current state
                 state = listofsubdata[[i]][1,2]
+                
+                #order that state's list of hospitals
                 ord <- order(listofsubdata[[i]][,3], listofsubdata[[i]][,1], na.last = NA)
                 stateData <- listofsubdata[[i]][ord,]
                 
+                #find the given ranked hospital for the state
+                #(needs to be in loop because each state may have
+                #different nrow() for "worst" case)
                 if(num == "best"){
                         n <- 1
                 }else if(num == "worst"){
@@ -67,10 +88,13 @@ rankall <- function(outcome, num = "best") {
                         n <- num
                 }
                 
+                #add the given ranked hospital for this state to the list of all states'
+                #ranked hospital
                 stateresult <- data.frame(Hospital.Name = stateData[n,1], State = state)
                 row.names(stateresult) <- state
                 results <- rbind(results, stateresult)
         }
         
+        #return list of hospitals
         results
 }

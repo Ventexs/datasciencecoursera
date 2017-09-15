@@ -1,6 +1,19 @@
-#14 Sept 2017
+# Script: rankhospital.R
+# Author: Steven Pettipas
+# Date: 14 Sept 2017
+#
+# Given a .CSV file of American hospital data, take a state, outcome
+# (heart attack, heart failure, pneumonia), and rank number (based on
+# outcome) and find the hospital in the state for the given ranking
+# in the given outcome category. In the event of multiple hospitals
+# with the lowest mortality rate, use alphabetical ordering to determine
+# their rank.
+
 rankhospital <- function(state, outcome, num) {
         
+        # valid
+        #
+        # A function to validate the parent function's arguments
         valid <- function(dataset, state, outcome) {
                 if(!(toupper(state) %in% dataset[,7])){
                         stop("invalid state")
@@ -9,6 +22,9 @@ rankhospital <- function(state, outcome, num) {
                 }
         }
         
+        # readhospitalfile
+        #
+        # A function to read in and validate the .CSV file of hospital data
         readhospitalfile <- function(state, outcome) {
                 path <- "C:/Users/Steven/Desktop/Coursera/datasciencecoursera/02 - R Programming/ProgrammingAssignment3/outcome-of-care-measures.csv"
                 data <- read.csv(path, colClasses = "character")
@@ -18,6 +34,10 @@ rankhospital <- function(state, outcome, num) {
                 data
         }   
         
+        # cleanData
+        #
+        # A function that takes in the read .CSV data and cleans it to contain
+        # only the necessary columns and data types
         cleanData <- function(dataset, state, outcome) {
                 
                 if(tolower(outcome) == "heart attack" ){
@@ -44,11 +64,11 @@ rankhospital <- function(state, outcome, num) {
         data <- cleanData(data, state, outcome)
         
       
-        #order data
+        #order data (numerically and then alphabetically)
         numorder <- order(data[,2], data[,1], na.last = NA)
         data <- data[numorder,]
         
-        
+        #find the given rank within the ordered data
         if(num == "best"){
                 data <- data[1, 1]
         }else if(num == "worst"){
@@ -57,6 +77,7 @@ rankhospital <- function(state, outcome, num) {
                 data <- data[num, 1]
         }
         
+        #return ranked hospital
         data
 }
 

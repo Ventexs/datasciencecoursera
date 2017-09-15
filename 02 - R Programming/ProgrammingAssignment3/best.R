@@ -1,3 +1,13 @@
+# Script: best.R
+# Author: Steven Pettipas
+# Date: 13 Sept 2017
+#
+# Given a .CSV file of American hospital data, take a state and an
+# outcome (heart attck, heart failure, pneumonia) and find the hospital
+# with the lowest 30-Day mortality rate for that outcome in the state.
+# In the event of multiple hospitals with the lowest mortality rate, use
+# alphabetical ordering to break the tie.
+
 best <- function(state, outcome) {
         
         ## read outcome data and initialize variables
