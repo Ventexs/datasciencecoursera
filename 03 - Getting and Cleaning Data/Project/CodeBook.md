@@ -13,11 +13,13 @@ The returned dataset of run_analysis includes 81 variables.
 
 ### Identifiers
 Variables which identify the data subject (1-30) and activity (laying, sitting, standing, walking, walking upstairs, walking downstairs):
+
 *[1] "Subject": (numeric) 1-30                                               
 *[2] "Activity": (character) laying, sitting, standing, walking, walking upstairs, walking downstairs
     
 ### Time Domain Signals
-Variables which show the calculated average mean or standard deviation of measurements by subject/activity in the XYZ axises and measured in the original dataset in the time domain:                                             
+Variables which show the calculated average mean or standard deviation of measurements by subject/activity in the XYZ axises and measured in the original dataset in the time domain:
+                                             
 *[3] "Average Body Acceleration Mean X-Axis (Time Domain)"                           
 *[4] "Average Body Acceleration Mean Y-Axis (Time Domain)"                           
 *[5] "Average Body Acceleration Mean Z-Axis (Time Domain)"                           
@@ -60,7 +62,8 @@ Variables which show the calculated average mean or standard deviation of measur
 *[42] "Average Body Gyroscope Jerk Magnitude Standard Deviation (Time Domain)"
 
 ### Frequency Domain Signals
-Variables which show the calculated average mean or standard deviation of measurements by subject/activity in the XYZ axises and calculated in the original dataset in the frequency domain using a Fast Fourier Transform:       
+Variables which show the calculated average mean or standard deviation of measurements by subject/activity in the XYZ axises and calculated in the original dataset in the frequency domain using a Fast Fourier Transform:  
+     
 *[43] "Average Body Acceleration Mean X-Axis (Frequency Domain)"                      
 *[44] "Average Body Acceleration Mean Y-Axis (Frequency Domain)"                      
 *[45] "Average Body Acceleration Mean Z-Axis (Frequency Domain)"                      
