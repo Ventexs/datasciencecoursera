@@ -69,12 +69,15 @@ run_analysis <- function(path = getwd()){
         avgData <- dataset[FALSE,]
         
         #add prefix Average to column names
-        colnames(avgData[3:81]) <- paste("Average", colnames(avgData[3:81]), sep=" ")
+        colnames(avgData)[3:81] <- paste("Average", colnames(avgData)[3:81], sep=" ")
         
         for(i in 1:length(splitData)){
                avgData[i,1:2] <- as.data.frame(splitData[i])[1,1:2]
                avgData[i,3:81] <- colMeans(as.data.frame(splitData[i])[,3:81])
         }
+        
+        ##bug where several columns have "Body" prefixed with a second "Body"?
+        colnames(avgData) <- gsub("BodyBody", "Body", colnames(avgData))
         
         avgData[order(avgData$Subject),]
         
